@@ -1,7 +1,23 @@
+using ModernPortfolio.Repositories;
+using ModernPortfolio.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Repositories
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<IAboutRepository, AboutRepository>();
+builder.Services.AddScoped<ITestimonialRepository, TestimonialRepository>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+
+//Services
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<IAboutRepository, AboutRepository>();
+builder.Services.AddScoped<ITestimonialRepository, TestimonialRepository>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 

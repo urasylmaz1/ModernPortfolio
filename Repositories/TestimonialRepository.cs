@@ -11,7 +11,7 @@ public class TestimonialRepository : GenericRepository<Testimonial>, ITestimonia
     {
     }
 
-    public async Task<IEnumerable<Testimonial>> GetActiveTestimonalsAsync()
+    public async Task<IEnumerable<Testimonial>> GetActiveTestimonialsAsync()
     {
         using var connection = new NpgsqlConnection(_connectionString);
         var sql = $"SELECT * FROM Testimonials WHERE IsActive = @IsActive";
