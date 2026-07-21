@@ -1,4 +1,5 @@
-﻿@{
+﻿@model HomeViewModel;
+@{
     ViewData["Title"] = "Ana Sayfa";
 }
 
@@ -10,11 +11,70 @@
       <div class="container text-center" data-aos="zoom-out" data-aos-delay="100">
         <div class="row justify-content-center">
           <div class="col-lg-8">
-            <h2>Uras Yılmaz</h2>
-            <p>Ben İzmir'de yaşayan bir yazılım geliştiriciyim.</p>
+            <h2>@Model.About?.Title</h2>
+            <p>@Model.About?.Description</p>
             <a asp-controller="Home" asp-action="About" class="btn-get-started">Hakkımda</a>
           </div>
         </div>
       </div>
 
     </section><!-- /Hero Section -->
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Referanslar ve Yorumlar</h2>
+        <p>Birlikte çalıştıklarımızdan aldığımız geri bildirimler</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+        <div class="swiper init-swiper">
+          <script type="application/json" class="swiper-config">
+            {
+              "loop": true,
+              "speed": 600,
+              "autoplay": {
+                "delay": 5000
+              },
+              "slidesPerView": "auto",
+              "pagination": {
+                "el": ".swiper-pagination",
+                "type": "bullets",
+                "clickable": true
+              }
+            }
+          </script>
+          <div class="swiper-wrapper">
+            @foreach (var testimonial in Model.Testimonials)
+            {
+              <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="~/@testimonial.ClientImageUrl" class="testimonial-img" alt="">
+                <h3>@testimonial.ClientName</h3>
+                <h4>@testimonial.ClientPosition</h4>
+                <div class="stars">
+                  @for(int i = 0; i < testimonial.Rating; i++)
+                  {
+                    <i class="bi bi-star-fill"></i>
+                  }
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>@testimonial.Comment</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+            }
+            
+
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+
+    </section><!-- /Testimonials Section -->

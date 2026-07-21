@@ -1,18 +1,32 @@
 using System;
+using System.Collections.Generic;
 using Dapper;
+using ModernPortfolio.Models;
 using Npgsql;
 
 namespace ModernPortfolio.Repositories;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
+    private static readonly Dictionary<string, string> TableNames = new(StringComparer.OrdinalIgnoreCase)
+    {
+        [nameof(About)] = "about",
+        [nameof(Project)] = "projects",
+        [nameof(Skill)] = "skills",
+        [nameof(Testimonial)] = "testimonials",
+        [nameof(Contact)] = "contacts"
+    };
+
     protected readonly string _connectionString;
     private readonly string _tableName;
     public GenericRepository(IConfiguration configuration)
     {
         _connectionString = configuration.GetConnectionString("DefaultConnection") ??
         throw new InvalidOperationException("Connection string not found!");
-        _tableName= typeof(T).Name + "s";
+        var entityName = typeof(T).Name;
+        _tableName = TableNames.TryGetValue(entityName, out var mappedTableName)
+            ? mappedTableName
+            : entityName + "s";
     }
     public async Task<int> CreateAsync(T entity)
     {

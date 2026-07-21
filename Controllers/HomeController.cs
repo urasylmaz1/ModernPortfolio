@@ -1,14 +1,32 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using ModernPortfolio.Models;
+using ModernPortfolio.Services;
+using ModernPortfolio.ViewModels;
 
 namespace ModernPortfolio.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly IAboutService _aboutService;
+    private readonly ITestimonialService _testimonailService;
+
+    public HomeController(IAboutService aboutService, ITestimonialService testimonailService)
     {
-        return View();
+        _aboutService = aboutService;
+        _testimonailService = testimonailService;
+    }
+
+    public async Task<ActionResult> Index()
+    {
+        var about = await _aboutService.GetAboutAsync();
+        var testimonails = await _testimonailService.GetActiveTestimonialsAsync();
+        var homeViewModel = new HomeViewModel
+        {
+            About = about,
+            Testimonials = testimonails
+        };
+        return View(homeViewModel);
     }
 
     public IActionResult Privacy()

@@ -47,8 +47,8 @@ CREATE TABLE IF NOT EXISTS Projects(
     IsActive BOOLEAN
 );
 
---Testimonals Table
-CREATE TABLE IF NOT EXISTS Testimonals(
+--Testimonials Table
+CREATE TABLE IF NOT EXISTS Testimonials(
     Id SERIAL PRIMARY KEY,
     ClientName VARCHAR(100) NOT NULL,
     ClientPosition VARCHAR(100),
