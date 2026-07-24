@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Extentions\" />
     <Folder Include="Services\" />
-    <Folder Include="ViewModels\" />
   </ItemGroup>
 
 </Project>
