@@ -11,12 +11,14 @@ public class HomeController : Controller
     private readonly IAboutService _aboutService;
     private readonly ITestimonialService _testimonailService;
     private readonly ISkillService _skillService;
+    private readonly IContactService _contactService;
 
-    public HomeController(IAboutService aboutService, ITestimonialService testimonailService, ISkillService skillService)
+    public HomeController(IAboutService aboutService, ITestimonialService testimonailService, ISkillService skillService, IContactService contactService)
     {
         _aboutService = aboutService;
         _testimonailService = testimonailService;
         _skillService = skillService;
+        _contactService = contactService;
     }
 
     public async Task<ActionResult> Index()
@@ -64,6 +66,30 @@ public class HomeController : Controller
             Skills = skillsViewModel
         };
         return View(model);
+    }
+    public IActionResult Contact()
+    {
+        return View(new ContactViewModel { });
+    }
+    [HttpPost]
+    public async Task<IActionResult> Contact(ContactViewModel contactViewModel)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(contactViewModel);
+        }
+        var contact = new Contact
+        {
+            Name= contactViewModel.Name!,
+            Email= contactViewModel.Email!,
+            Subject= contactViewModel.Subject,
+            Message= contactViewModel.Message!,
+            CreatedAt= DateTime.UtcNow,
+            IsRead= false
+        };
+        await _contactService.CreateContactAsync(contact);
+        TempData["SuccessMessage"] = "Mesajınız başarıyla gönderildi. En kısa sürede dönüş yapacağız.";
+        return RedirectToAction(nameof(Contact));
     }
 
     public IActionResult Privacy()
