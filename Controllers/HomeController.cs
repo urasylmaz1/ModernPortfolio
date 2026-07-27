@@ -84,8 +84,6 @@ public class HomeController : Controller
             Email= contactViewModel.Email!,
             Subject= contactViewModel.Subject,
             Message= contactViewModel.Message!,
-            CreatedAt= DateTime.UtcNow,
-            IsRead= false
         };
         await _contactService.CreateContactAsync(contact);
         TempData["SuccessMessage"] = "Mesajınız başarıyla gönderildi. En kısa sürede dönüş yapacağız.";
