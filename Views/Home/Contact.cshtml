@@ -93,3 +93,7 @@
       </div>
 
     </section><!-- /Contact Section -->
+
+    @section Scripts {
+       @await Html.PartialAsync(partialViewName: "_ValidationScriptsPartial")
+    }

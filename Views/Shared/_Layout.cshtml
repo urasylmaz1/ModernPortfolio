@@ -104,7 +104,7 @@
 
   <!-- Main JS File -->
   <script src="~/ui/js/main.js"></script>
-
+  @await RenderSectionAsync(name: "Scripts", required: false) 
 </body>
 
 </html>
