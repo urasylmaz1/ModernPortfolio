@@ -12,6 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\" />
+    <Folder Include="Areas\Admin\" />
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Views\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Extentions\" />
     <Folder Include="Services\" />
   </ItemGroup>

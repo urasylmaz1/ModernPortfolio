@@ -1,0 +1,84 @@
+﻿@model AboutEditViewModel
+@{
+    ViewData["Title"] = "Hakkında bilgisini yarat";
+}
+
+@if (TempData["SuccessMessage"] is not null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] is not null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<form asp-area="Admin" asp-controller="About" asp-action="Edit" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for=Id />
+    <div class="mb-3">
+        <label asp-for=Title class="form-label"></label>
+        <input asp-for=Title class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for=Description class="form-label"></label>
+        <input asp-for=Description class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for=Age class="form-label"></label>
+        <input asp-for=Age class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for=City class="form-label"></label>
+        <input asp-for=City class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for=Email class="form-label"></label>
+        <input asp-for=Email class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for=GithubUrl class="form-label"></label>
+        <input asp-for=GithubUrl class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for=LinkedInUrl class="form-label"></label>
+        <input asp-for=LinkedInUrl class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for=PhoneNumber class="form-label"></label>
+        <input asp-for=PhoneNumber class="form-control" />
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for=CurrentImageUrl class="form-label"></label>
+        @if (!string.IsNullOrEmpty(Model.CurrentImageUrl))
+        {
+            <div class="mb-2">
+                <img class="img-thumbnail" style="max-width=300px; max-height:300px;" src="@Model.CurrentImageUrl" />
+            </div>
+        }
+        else
+        {
+            <p class="text-muted">Mevcut görsel yok</p>
+        }
+    </div>
+    <div class="mb-3">
+        <label asp-for=ImageFile class="form-label"></label>
+        <input asp-for=ImageFile class="form-control" accept="image/*" />
+        <small class="form-text text-muted">Desteklenen formatlar: JPG, PNG, GIF. Maksimum boyut:
+            5MB</small>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Güncelle
+        </button>
+        <a asp-area="Admin" asp-controller="About" asp-action="Index" class="btn btn-secondary">
+            <i class="fas fa-times"></i> İptal
+        </a>
+    </div>
+</form>

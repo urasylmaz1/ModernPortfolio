@@ -1,0 +1,29 @@
+@model AboutEditViewModel
+@{
+    ViewData["Title"] = "Hakkında";
+}
+
+
+<div class="container-fluid pt-4 px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+            @(Model is null ? "Hakkımda Bilgisi EKLE" : "Hakkımda Bilgisi GÜNCELLE")
+        </h2>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            @if (Model is null)
+            {
+                @await Html.PartialAsync("_CreatePartial", new AboutCreateViewModel())
+            }
+            else
+            {
+                @await Html.PartialAsync("_EditPartial", Model)
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

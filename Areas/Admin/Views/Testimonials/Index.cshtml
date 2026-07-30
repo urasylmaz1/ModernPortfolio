@@ -1,0 +1,93 @@
+﻿@model List<TestimonialListViewModel>
+@{
+    ViewData["Title"] = "Referans Yönetimi";
+}
+<div class="container-fluid pt-4 px-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Referans Yönetimi</h2>
+        <a asp-area="Admin" asp-controller="Testimonials" asp-action="Create" class="btn btn-primary"> <i
+                class="fas fa-plus"></i> Yeni Referans Ekle</a>
+    </div>
+    @if (TempData["SuccessMessage"] is not null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["ErrorMessage"] is not null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["ErrorMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Müşteri</th>
+                            <th scope="col">Pozisyon</th>
+                            <th scope="col">Değerlendirme</th>
+                            <th scope="col">Görsel</th>
+                            <th scope="col">Durum</th>
+                            <th scope="col">Oluşturulma</th>
+                            <th scope="col">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model is not null && Model.Any())
+                        {
+                            @foreach (var testimonial in Model)
+                            {
+                                <tr>
+                                    <th scope="row">@testimonial.Id</th>
+                                    <td>@testimonial.ClientName</td>
+                                    <td>@testimonial.ClientPosition</td>
+                                    <td>@testimonial.Rating</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(testimonial.ClientImageUrl))
+                                        {
+                                            <img src="@testimonial.ClientImageUrl" alt="@testimonial.ClientName"
+                                                class="img-thumbnail" style="max-width:100px; max-height:100px;" />
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Görsel yok</span>
+                                        }
+                                    </td>
+                                    <td>@testimonial.Status</td>
+                                    <td>@testimonial.CreatedDate</td>
+                                    <td>
+                                        <a asp-area="Admin" asp-controller="Testimonials" asp-action="Edit"
+                                            asp-route-id="@testimonial.Id" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-edit"></i> Düzenle
+                                        </a>
+                                        <form asp-area="Admin" asp-controller="Testimonials" asp-action="Delete"
+                                            asp-route-id="@testimonial.Id" method="post" class="d-inline">
+
+                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                onclick="return confirm('Bu yorumu silmek istediğinizden emin misiniz? Bu işlem geri alınamaz!');">
+
+                                                <i class="fas fa-trash"></i>
+                                                Sil
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning">Henüz yorum eklenmemiş</div>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
