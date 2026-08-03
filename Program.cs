@@ -1,9 +1,23 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using ModernPortfolio.Repositories;
 using ModernPortfolio.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+
+//Authentication
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath="/Admin/Account/Login";
+        options.LogoutPath="/Admin/Account/Logout";
+        options.AccessDeniedPath="/Admin/Account/AccessDenied";
+        options.Cookie.Name="ModernPortfolioAuth";
+        options.Cookie.HttpOnly=true;
+        options.Cookie.SecurePolicy=CookieSecurePolicy.SameAsRequest;
+        options.ExpireTimeSpan=TimeSpan.FromDays(7);
+    });
 
 //Repositories
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
@@ -33,7 +47,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

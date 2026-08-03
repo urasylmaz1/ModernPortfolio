@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.2.0" />
     <PackageReference Include="Dapper" Version="2.1.79" />
     <PackageReference Include="Npgsql" Version="10.0.3" />
   </ItemGroup>
@@ -19,6 +20,7 @@
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Extentions\" />
     <Folder Include="Services\" />
+    <Folder Include="Views\Account\" />
   </ItemGroup>
 
 </Project>
