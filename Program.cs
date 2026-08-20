@@ -34,6 +34,7 @@ builder.Services.AddScoped<IAboutService, AboutService>();
 builder.Services.AddScoped<ITestimonialService, TestimonialService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserSeedService, UserSeedService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -68,5 +69,9 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-
+using (var scope = app.Services.CreateScope())
+{
+    var userSeedService = scope.ServiceProvider.GetRequiredService<IUserSeedService>();
+    await userSeedService.SeedDeafaultUserAsync();
+}
 app.Run();

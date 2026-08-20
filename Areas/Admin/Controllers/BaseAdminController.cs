@@ -3,12 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ModernPortfolio.Areas.Admin.Controllers
 {
-    public class DashboardController : BaseAdminController
+    [Area("Admin")]
+    [Authorize]
+    public abstract class BaseAdminController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
 
     }
 }
