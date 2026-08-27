@@ -1,0 +1,51 @@
+@model SettingsViewModel
+@{
+    ViewData["Title"] = "Kullanıcı Ayarları";
+}
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-light rounded h-100 p-4">
+        <h6 class="mb-4">Kullanıcı Ayarları</h6>
+        <form asp-area = "Admin" asp-controller="Settings" asp-action="UpdateUserName" method="post">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <div class="mb-3">
+                <label asp-for="UserName" class="form-label"></label>
+                <input  class="form-control" asp-for="UserName" />
+            </div>
+            <button type="submit" class="btn btn-primary">Kullanıcı Adını Güncelle</button>
+        </form>
+
+        <form asp-area = "Admin" asp-controller="Settings" asp-action="UpdateUserPassword" method="post" class="mt-4">
+            @if (TempData["PasswordSuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["PasswordSuccessMessage"]
+                </div>
+            }
+            <div asp-validation-summary="All" class="text-danger mb-3"></div>
+            <div class="mb-3">
+                <div class="mb-3">
+                    <label asp-for="CurrentPassword" class="form-label"></label>
+                    <input type="password" class="form-control" asp-for="CurrentPassword" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="NewPassword" class="form-label"></label>
+                    <input type="password" class="form-control" asp-for="NewPassword" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="ConfirmPassword" class="form-label"></label>
+                    <input type="password" class="form-control" asp-for="ConfirmPassword" />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Şifre Güncelle</button>
+        </form>
+    </div>
+</div>
+
+
+
