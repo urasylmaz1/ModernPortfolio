@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ModernPortfolio.Models;
 using ModernPortfolio.Services;
 using ModernPortfolio.ViewModels;
 
@@ -27,5 +28,9 @@ public class ProjectsController : BaseAdminController
             CreatedDate = p.CreatedAt.ToShortDateString()
         }).ToList();
         return View(model);
+    }
+    public IActionResult Create()
+    {
+        return View(new ProjectCreateViewModel());
     }
 }
