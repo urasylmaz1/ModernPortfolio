@@ -65,7 +65,7 @@ namespace ModernPortfolio.Areas.Admin.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             //Since we are in the Admin area, we need to specify the area as empty to redirect to the Home controller in the root area.
-            return RedirectToAction("Index","Home", new {area = string.Empty}); 
+            return RedirectToAction("Index","Home", new {area = string.Empty});
         }
     }
 }
