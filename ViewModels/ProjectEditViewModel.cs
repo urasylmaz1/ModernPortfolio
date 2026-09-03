@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace ModernPortfolio.ViewModels;
 
-public class ProjectCreateViewModel
+public class ProjectEditViewModel
 {
+    public int Id { get; set; }
     [Required(ErrorMessage = "Başlık zorunludur!")]
     [StringLength(200, MinimumLength = 5, ErrorMessage = "Başlık 5-200 karakter arasında olmalıdır!")]
     [Display(Name ="Başlık")]
@@ -18,8 +18,9 @@ public class ProjectCreateViewModel
     [Display(Name = "Github URL")]
     [Url(ErrorMessage = "Geçerli bir URL giriniz!")]
     public string? GithubUrl { get; set; }
-    [Display(Name = "Görsel")]
-    [Required(ErrorMessage ="Görsel zorunludur!")]
+    [Display(Name = "Mevcut Görsel")]
+    public string? CurrentImageUrl { get; set; }
+    [Display(Name = "Yeni Görsel")]
     [DataType(DataType.Upload)]
     public IFormFile? ImageFile { get; set; }
     [Display(Name = "Aktif")]

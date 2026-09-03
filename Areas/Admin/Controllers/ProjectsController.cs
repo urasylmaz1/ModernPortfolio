@@ -9,12 +9,13 @@ namespace ModernPortfolio.Areas.Admin.Controllers;
 public class ProjectsController : BaseAdminController
 {
     private readonly IProjectService _projectService;
-    private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IImageService _imageService;
 
-    public ProjectsController(IProjectService projectService, IWebHostEnvironment webHostEnvironment)
+    public ProjectsController(IProjectService projectService, IImageService imageService)
     {
         _projectService = projectService;
-        _webHostEnvironment = webHostEnvironment;
+        _imageService = imageService;
+
     }
     [HttpGet]
     public async Task<IActionResult> Index()
@@ -55,8 +56,8 @@ public class ProjectsController : BaseAdminController
         {
             try
             {
-                var imageUrl = await SaveImageAsync(model.ImageFile);
-                project.ImageUrl=imageUrl;
+                var imageUrl = await _imageService.SaveImageAsync(model.ImageFile);
+                project.ImageUrl = imageUrl;
             }
             catch (Exception e)
             {
@@ -79,29 +80,98 @@ public class ProjectsController : BaseAdminController
         }
         return View(model);
     }
-    private async Task<string> SaveImageAsync(IFormFile imageFile)
+    [HttpGet]
+    public async Task<IActionResult> Edit(int id)
     {
-        var allowedExtentions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-        var fileExtension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
-        if (!allowedExtentions.Contains(fileExtension))
+        var project = await _projectService.GetProjectByIdAsync(id);
+        if (project is null)
         {
-            throw new ArgumentException("Geçersiz dosya formatı! Sadece PNG, JPG, ve GIF formatları desteklenir.");
+            TempData["ErrorMessage"] = "Proje bulunamadı!";
+            return RedirectToAction(nameof(Index));
         }
-        if (imageFile.Length > 5 * 1024 * 1024)
+        var model = new ProjectEditViewModel()
         {
-            throw new ArgumentException("Dosya boyutu 5 MB'tan büyük olamaz.");
-        }
-        var fileName = $"{Guid.NewGuid()}{fileExtension}";
-        var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "ui", "img", "portfolio");
-        if (!Directory.Exists(uploadsFolder))
+            Id = project.Id,
+            Title = project.Title,
+            Description = project.Description,
+            ProjectUrl = project.ProjectUrl,
+            GithubUrl = project.GithubUrl,
+            CurrentImageUrl = "/"+ project.ImageUrl,
+            IsActive = project.IsActive
+        };
+        return View(model);
+    }
+    [HttpPost]
+    public async Task<IActionResult> Edit(ProjectEditViewModel model)
+    {
+        if (!ModelState.IsValid)
         {
-            Directory.CreateDirectory(uploadsFolder);
+            return View(model);
         }
-        var filePath = Path.Combine(uploadsFolder, fileName);
-        using var stream = new FileStream(filePath, FileMode.Create);
-        await imageFile.CopyToAsync(stream);
-        var imageUrl = $"ui/img/portfolio/{fileName}";
-        return imageUrl;
+        var project = await _projectService.GetProjectByIdAsync(model.Id);
+        if (project is null)
+        {
+            TempData["ErrorMessage"] = "Proje bulunamadı!";
+            return RedirectToAction(nameof(Index));
+        }
+        project.Title = model.Title;
+        project.Description = model.Title;
+        project.ProjectUrl = model.ProjectUrl;
+        project.GithubUrl = model.GithubUrl;
+        project.IsActive = model.IsActive;
+        if (model.ImageFile is not null && model.ImageFile.Length > 0)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(project.ImageUrl))
+                {
+                    await _imageService.DeleteImageAsync(project.ImageUrl);
+                }
+                var imageUrl = await _imageService.SaveImageAsync(model.ImageFile);
+                project.ImageUrl = imageUrl;
+            }
+            catch (Exception e)
+            {
+                ModelState.AddModelError("ImageFile", e.Message);
+                return View(model);
+            }
+        }
+        try
+        {
+            var result = await _projectService.UpdateProjectAsync(project);
+            if (result)
+            {
+                TempData["SuccessMessage"] = "Proje başarıyla düzenlendi.";
+                return RedirectToAction(nameof(Index));
+            }
+            TempData["ErrorMessage"] = "Proje güncellenirken bir sorun oluştu!";
+        }
+        catch (Exception e)
+        {
+            TempData["ErrorMessage"] = $"Hata: {e.Message}";
+        }
+        return View(model);
+    }
+    [HttpPost]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            var result = await _projectService.DeleteProjectAsync(id);
+            if (result)
+            {
+                TempData["SuccessMessage"] = "Proje başarıyla silindi";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Proje silinirken hata oluştu!";
+            }
+        }
+        catch (Exception e)
+        {
+            TempData["ErrorMessage"] = $"Hata: {e.Message}";
+        }
+        return RedirectToAction(nameof(Index));
     }
 }
 

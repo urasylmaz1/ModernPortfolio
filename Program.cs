@@ -35,6 +35,7 @@ builder.Services.AddScoped<ITestimonialService, TestimonialService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserSeedService, UserSeedService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 

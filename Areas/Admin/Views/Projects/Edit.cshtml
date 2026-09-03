@@ -1,17 +1,18 @@
-@model ProjectCreateViewModel
+@model ProjectEditViewModel
 @{
-    ViewData["Title"] = "Yeni Proje Ekle";
+    ViewData["Title"] = "Proje Güncelle";
 }
 <div class="container-fluid pt-4 px-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Yeni Proje Ekle</h2>
+        <h2>Proje Güncelle</h2>
     </div>
     <div class="card-header">
-        <h4>Yeni Proje Ekle</h4>
+        <h4>Proje Güncelle</h4>
     </div>
     <div class="card-body">
-        <form asp-area="Admin" asp-controller="Projects" asp-action="Create" method="post" enctype="multipart/form-data">
+        <form asp-area="Admin" asp-controller="Projects" asp-action="Edit" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="All" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
                 <div class="mb-3">
                     <label asp-for=Title class="form-label"></label>
                     <input asp-for=Title class="form-control"/>
@@ -28,6 +29,19 @@
                     <label asp-for=GithubUrl class="form-label"></label>
                     <input asp-for=GithubUrl class="form-control"/>
                 </div>
+                <div class="form-group">
+                    <label asp-for="CurrentImageUrl" class="form-label"></label>
+                    @if(!string.IsNullOrEmpty(Model.CurrentImageUrl))
+                    {
+                        <div class="mb-2">
+                            <img class="img-thumbnail" style="max-width:200px; max: height 200px;" src="@Model.CurrentImageUrl"/>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Mevcut görsel yok</p>
+                    }
+                </div>
                 <div class="mb-3">
                     <label asp-for=ImageFile class="form-label"></label>
                     <input asp-for=ImageFile class="form-control" accept="image/*"/>
@@ -41,7 +55,7 @@
                 </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> Kaydet
+                        <i class="fas fa-save"></i> Güncelle
                     </button>
                     <a asp-area="Admin" asp-controller="Projects" asp-action="Index" class="btn btn-secondary">
                         <i class="fas fa-times"></i> İptal
