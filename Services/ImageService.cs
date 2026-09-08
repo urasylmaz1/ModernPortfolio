@@ -23,7 +23,7 @@ public class ImageService : IImageService
         }
     }
 
-    public async Task<string> SaveImageAsync(IFormFile imageFile)
+    public async Task<string> SaveImageAsync(IFormFile imageFile,string folderName="portfolio")
     {
         var allowedExtentions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
         var fileExtension = Path.GetExtension(imageFile.FileName).ToLowerInvariant();
@@ -36,7 +36,7 @@ public class ImageService : IImageService
             throw new ArgumentException("Dosya boyutu 5 MB'tan büyük olamaz.");
         }
         var fileName = $"{Guid.NewGuid()}{fileExtension}";
-        var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "ui", "img", "portfolio");
+        var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "ui", "img", folderName);
         if (!Directory.Exists(uploadsFolder))
         {
             Directory.CreateDirectory(uploadsFolder);
@@ -44,7 +44,7 @@ public class ImageService : IImageService
         var filePath = Path.Combine(uploadsFolder, fileName);
         using var stream = new FileStream(filePath, FileMode.Create);
         await imageFile.CopyToAsync(stream);
-        var imageUrl = $"ui/img/portfolio/{fileName}";
+        var imageUrl = $"ui/img/{folderName}/{fileName}";
         return imageUrl;
     }
 

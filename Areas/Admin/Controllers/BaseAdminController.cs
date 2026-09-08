@@ -5,7 +5,4 @@ namespace ModernPortfolio.Areas.Admin.Controllers;
 
 [Area("Admin")]
 [Authorize]
-public abstract class BaseAdminController : Controller
-{
-
-}
+public abstract class BaseAdminController : Controller{}

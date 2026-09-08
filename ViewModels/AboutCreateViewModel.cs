@@ -13,6 +13,7 @@ public class AboutCreateViewModel
     [Display(Name ="Açıklama")]
     public string Description { get; set; } = string.Empty;
     [Display(Name = "Görsel")]
+    [Required(ErrorMessage ="Görsel zorunludur!")]
     [DataType(DataType.Upload)]
     public IFormFile? ImageFile { get; set; }
     [Required(ErrorMessage = "Email zorunludur.")]

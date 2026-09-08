@@ -12,7 +12,9 @@ public class AboutEditViewModel
     [StringLength(5000, ErrorMessage = "Açıklama en fazla 200 karakter olabilir.")]
     [Display(Name ="Açıklama")]
     public string Description { get; set; } = string.Empty;
-    [Display(Name = "Görsel")]
+    [Display(Name = "Mevcut Görsel")]
+    public string? CurrentImageUrl { get; set; }
+    [Display(Name = "Yeni Görsel")]
     [DataType(DataType.Upload)]
     public IFormFile? ImageFile { get; set; }
     [Required(ErrorMessage = "Email zorunludur.")]
