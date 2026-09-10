@@ -31,9 +31,19 @@ public class SkillService : ISkillService
         return result;
     }
 
-    public Task<bool> DeleteSkillAsync(int id)
+    public async Task<bool> DeleteSkillAsync(int id)
     {
-        throw new NotImplementedException();
+        if (id < 0)
+        {
+            throw new ArgumentException("Id must be greater than zero!", nameof(id));
+        }
+        var skill= await _repository.GetByIdAsync(id);
+        if(skill is null)
+        {
+            return false;
+        }
+        var result = await _repository.DeleteAsync(id);
+        return result;
     }
 
     public async Task<IEnumerable<Skill>> GetAllSkillsAsync()

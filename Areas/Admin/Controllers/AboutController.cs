@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using ModernPortfolio.Areas.Admin.Controllers;
 using ModernPortfolio.Models;
 using ModernPortfolio.Services;
 using ModernPortfolio.ViewModels;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ModernPortfolio.Areas.Admin.Controllers;
 
