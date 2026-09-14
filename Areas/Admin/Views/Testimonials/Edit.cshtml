@@ -1,11 +1,11 @@
-@model ProjectEditViewModel
+@model TestimonialEditViewModel
 @{
-    ViewData["Title"] = "Projeyi güncelle";
+    ViewData["Title"] = "Yorum Düzenle";
 }
 
 <div class="container-fluid pt-4 px-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Proje Güncelle</h2>
+        <h2>Yorum Düzenle</h2>
     </div>
     <div class="card">
         <div class="card-body">
@@ -24,28 +24,27 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             }
-            <form asp-area="Admin" asp-controller="Projects" asp-action="Edit" method="post"
+            <form asp-area="Admin" asp-controller="Testimonials" asp-action="Edit" method="post"
                 enctype="multipart/form-data">
                 <div asp-validation-summary="All" class="text-danger"></div>
 
                 <input type="hidden" asp-for=Id>
                 <div class="mb-3">
-                    <label asp-for=Title class="form-label"></label>
-                    <input asp-for=Title class="form-control" />
+                    <label asp-for=ClientName class="form-label"></label>
+                    <input asp-for=ClientName class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label asp-for=Description class="form-label"></label>
-                    <textarea asp-for=Description class="form-control" rows="5"></textarea>
+                    <label asp-for=ClientPosition class="form-label"></label>
+                    <input asp-for=ClientPosition class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label asp-for=ProjectUrl class="form-label"></label>
-                    <input asp-for=ProjectUrl class="form-control" />
+                    <label asp-for=Rating class="form-label"></label>
+                    <input asp-for=Rating class="form-control" />
                 </div>
                 <div class="mb-3">
-                    <label asp-for=GithubUrl class="form-label"></label>
-                    <input asp-for=GithubUrl class="form-control" />
+                    <label asp-for=Comment class="form-label"></label>
+                    <textarea asp-for=Comment class="form-control" rows="5"></textarea>
                 </div>
-
                 <div class="form-group">
                     <label asp-for=CurrentImageUrl class="form-label"></label>
                     @if (!string.IsNullOrEmpty(Model.CurrentImageUrl))
@@ -77,7 +76,7 @@
                     <button type="submit" class="btn btn-primary">
                         <i class="fas fa-save"></i> Güncelle
                     </button>
-                    <a asp-area="Admin" asp-controller="Projects" asp-action="Index" class="btn btn-secondary">
+                    <a asp-area="Admin" asp-controller="Testimonials" asp-action="Index" class="btn btn-secondary">
                         <i class="fas fa-times"></i> İptal
                     </a>
                 </div>
