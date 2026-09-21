@@ -1,0 +1,18 @@
+@model AboutViewModel
+<footer id="footer" class="footer light-background">
+
+    <div class="container">
+      <div class="copyright text-center ">
+        <p>© <span>Tüm hakları saklıdır.</span> <strong class="px-1 sitename">Uras Yılmaz</strong> <span>tarafından yapılmıştır.<br></span></p>
+      </div>
+      <div class="text-center">
+        <span><strong>Tel:</strong></span> @Model.PhoneNumber
+        <span><strong>Email:</strong></span> @Model.Email
+      </div>
+      <div class="social-links d-flex justify-content-center">
+            <a href="@Model.LinkedinUrl" class="linkedin"><i class="bi bi-linkedin"></i></a>
+            <a href="@Model.GithubUrl" class="github"><i class="bi bi-github"></i></a>
+      </div>
+    </div>
+
+  </footer>
