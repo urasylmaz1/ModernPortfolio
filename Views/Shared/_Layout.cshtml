@@ -33,31 +33,7 @@
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center light-background sticky-top">
-    <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
-
-      <a href="/" class="logo d-flex align-items-center me-auto me-xl-0">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="~/ui/img/logo.png" alt=""> -->
-        <h1 class="sitename"></h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="~/" class="@Html.IsActive("Home", "Index")">Ana Sayfa</a></li>
-          <li><a asp-controller="Home" asp-action="About" class="@Html.IsActive("Home", "About")">Hakkımda</a></li>
-          <li><a asp-controller="Projects" asp-action="Index"class="@Html.IsActive("Projects", "Index")">Projeler</a></li>
-          <li><a asp-controller="Home" asp-action="Contact" class="@Html.IsActive("Home", "Contact")">İletişim</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
-      <div class="header-social-links">
-       
-      </div>
-
-    </div>
-  </header>
+  @await Component.InvokeAsync("Header")
 
   <main class="main">
 
@@ -66,7 +42,7 @@
   </main>
 
   
-  @await Component.InvokeAsync("Footer");
+  @await Component.InvokeAsync("Footer")
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
